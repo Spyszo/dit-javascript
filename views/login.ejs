@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/login.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="http://localhost:5000/socket.io/socket.io.js"></script>
+    <link href="fonts/IndieFlower-Regular.ttf" rel="stylesheet">
+    <script type="text/javascript" src="js/login_page.js"></script>
+    <script src="js/ejs.js"></script>
+</head>
+
+<body onload="showError('<%=error %>')">
+    <div class="bg">
+        <div class="container">
+            <h1 class="title">DRAW IT TOGETHER</h1>
+            <div class="login-box">
+                <form action="login" method="POST">
+                    <h2>SING IN</h2>
+                    <label for="username_login">
+                        <i class="material-icons">person_outline</i>
+                        <input type="email" placeholder="E-mail" id="email_login" name="email_login" />
+                    </label>
+                    <label for="password_login">
+                        <i class="material-icons">lock_outline</i>
+                        <input type="password" placeholder="Password" id="password_login" name="password_login" />
+                    </label>
+                    <input type="submit" value="Log in"/>
+
+                    <p class="newaccount">CREATE NEW ACCOUNT</p>
+                </form>
+            </div>
+            <div class="slider-container">
+                <div id="slider">
+                    <figure>
+                        <img src="https://i.imgur.com/OgQhPR9.png">
+                        <img src="https://i.imgur.com/YF7zAPN.png">
+                        <img src="https://i.imgur.com/yiQXilt.png">
+                    </figure>
+                </div>
+                <h1>DRAW WITH YOUR FRIENDS USE MANY TOOLS AND HAVE FUN!</h1>
+            </div>
+            <div class="register-box">
+                <form action="register" method="POST" autocomplete="on">
+                    <h2>CREATE NEW ACCOUNT</h2>
+                    <label for="username_register">
+                        <i class="material-icons">person_outline</i>
+                        <input type="text" placeholder="Username" id="username_register" name="username_register" minlength="4" />
+                    </label>
+                    <label for="email_register">
+                        <i class="material-icons">mail_outline</i>
+                        <input type="email" placeholder="E-mail" name="email_register" id="email_register" />
+                    </label>
+                    <label for="password_register">
+                        <i class="material-icons">lock_outline</i>
+                        <input type="password" placeholder="Password" id="password_register" name="password_register" autocomplete="current-password" />
+                    </label>
+                    <input type="submit" value="Register">
+                    <button type="button" class="back_button">
+                        <i class="material-icons">arrow_back</i>
+                        <span>Back</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="error">
+            <p>BŁĄD! <span id="error_text"></span></p>
+            <div class="error_close">x</div>
+        </div>
+
+    </div>
+</body>
+
+</html>

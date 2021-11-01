@@ -1,0 +1,274 @@
+@font-face {
+    font-family: 'IndieFlower';
+    src: url('../fonts/IndieFlower-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/materialicons/v51/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+}
+
+body {
+    background: linear-gradient(90deg, #e91e63, #f48aae)fixed;
+    margin: 0;
+    font-family: 'Roboto';
+    font-size: 22px;
+    user-select: none;
+    color: white;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 1280px;
+    height: 625px;
+    text-align: center;
+    background-color: white;
+    box-shadow: 1px 6px 18px 0px rgba(0, 0, 0, 0.73);
+    background-color: #e91e63;
+    overflow: hidden;
+}
+
+.login-box {
+    width: 384px;
+    position: absolute;
+    left: 0;
+    transition: .25s ease;
+}
+
+.login-box.hidden {
+    left: -100%;
+}
+
+.register-box {
+    position: absolute;
+    width: 384px;
+    right: -100%;
+    transition: .25s ease;
+}
+
+.register-box.show {
+    right: 1px;
+}
+
+form {
+    width: 100%;
+    margin-top: 60px;
+}
+
+form h2 {
+    font-weight: bold;
+    font-family: IndieFlower;
+    margin: 0px;
+    font-size: 30px;
+}
+
+label {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 6px;
+}
+
+input {
+    background: white;
+    height: 45px;
+    border-radius: 10px;
+    padding: 0 20px;
+    border: 1px solid #a31545;
+    outline: none;
+    margin-left: 5px;
+    width:50%;
+}
+
+input[type="submit"] {
+    font-weight: bold;
+    width: 100px;
+    cursor: pointer;
+    margin-top: 12px;
+}
+
+.back_button {
+    cursor: pointer;
+    font-size: 20px;
+    width: 100px;
+    height: 35px;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: white;
+    margin: 0 auto;
+    margin-top: 20px;
+    transition: 0.1s ease;
+}
+
+.back_button:hover {
+    color: #a31545;
+}
+
+
+.back_button p {
+    float: left;
+    text-align: center;
+    width: 50px;
+    margin: 0;
+    font-size: 20px;
+}
+
+.back_button .material-icons {
+    font-size: 24px;
+    float: left;
+}
+
+.title {
+    font-family: IndieFlower;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 50px;
+    height: 50px;
+    margin-top: 80px;
+}
+
+
+
+.newaccount {
+    font-family: IndieFlower;
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+    transition: 0.1s ease;
+}
+
+.newaccount:hover {
+    color: #a31545;
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-size: 30px;
+    -webkit-font-smoothing: antialiased;
+}
+
+
+.slider-container {
+    height: 100%;
+    width: 896px;
+    position: relative;
+    float: right;
+    overflow: hidden;
+}
+
+#slider {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+#slider figure {
+    position: relative;
+    width: 500%;
+    margin: 0;
+    left: 0;
+    animation: 20s slider infinite;
+}
+
+#slider figure img {
+    width: 20%;
+    float: left;
+}
+
+@keyframes slider {
+    0% {
+        left: 0;
+    }
+    20% {
+        left: 0;
+    }
+    30% {
+        left: -100%;
+    }
+    60% {
+        left: -100%;
+    }
+    70% {
+        left: -200%;
+    }
+    90% {
+        left: -200%;
+    }
+    100% {
+        left: 0;
+    }
+}
+
+.error {
+    width: 450px;
+    height: 45px;
+    text-align: center;
+    line-height: 45px;
+    background-color: lightcoral;
+    padding: 10px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    background-color: #ff6186;
+    border: 1px solid #821f1f;
+}
+
+.error_close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border-radius: 2px;
+    font-size: 10px;
+    padding: 2px;
+    width: 10px;
+    height: 10px;
+    color: black;
+    font-size: 16px;
+    line-height: 7px;
+}
+
+.error p {
+    margin: 0;
+    font-weight: bold;
+    color: #cf0000;
+}
+
+.error span {
+    font-weight: normal;
+    color: #b02828;
+}
+
+.slider-container .slider h2 {
+    position: relative;
+    font-family: IndieFlower;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: right;
+    height: 50px;
+    color: #e91e63;
+    z-index: 3;
+    top: -10%;
+    margin-right: 5px;
+}
+
+@media (max-width: 1320px) {
+    .slider-container {
+        display: none;
+    }
+    .container {
+        width: 384px;
+    }
+}

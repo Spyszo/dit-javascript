@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <link href="css/style.css" rel="stylesheet" class="css1">
+        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+        <link href="fonts/IndieFlower-Regular.ttf" rel="stylesheet">
+        <script src="http://localhost:5000/socket.io/socket.io.js"></script> <!--ip serwera-->
+
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/LazyBrush.js"></script>
+        <script type="text/javascript" src="js/konva.min.js"></script>
+        <script type="text/javascript" src="js/cookies.js"></script>
+        <script type="text/javascript" src="js/simplify.js"></script>
+        <script type="text/javascript" src="js/cursor.js"></script>
+        <script type="text/javascript" src="js/clipboard.min.js"></script>
+        <script type="text/javascript" src="js/updateTextInput.js"></script>
+        <script type="text/javascript" src="js/ejs.js"></script>
+        
+    </head>
+    <body>
+        <div class="content">
+
+            <!--Nawigacja-->
+
+            <div class="nav">
+                <div class="nav-info nav-info-left">
+                    <button id="online_list_button" class="nav-button" >
+                        <p>Online: <span id="online_users"></span></p>
+                    </button>
+
+                    <button id="session_button" class="nav-button">Room</button>
+                    <div class="session">
+                        <input type="text" placeholder="Room ID" id="room_name">
+                        <input type="submit" value="Join" id="join_room">
+                        <div class="session_copy_input">
+                            <input type="text" placeholder="Room ID" id="create_room_ID" readonly>
+                            <button id="copy_button" data-clipboard-target="#create_room_ID"><i class="material-icons jd">content_copy</i></button>
+                        </div>
+                        <input type="submit" value="New room" id="create_room">
+                    </div>
+                </div>
+                <div class="nav-info title">DRAW IT TOGETHER</div>
+                <div class="nav-info nav-info-right">
+                    <button class="nav-button settings_button" onclick="show_user_settings()">
+                        <i class="material-icons">account_circle</i>
+                        <p id="your_nick"><%= username %></p>
+                    </button>
+                    <div style="clear:both"></div>
+                    <div class="user_settings">
+                        <p class="light">LIGHT</p>
+                        <p class="dark">DARK</p>
+                        <a href="/logout"><p class="przwyl">Wyloguj</p></a>
+                    </div>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+
+            <!--Przybornik-->
+
+            <div class="kit" id="kit">
+                <div class="icon-button" id="brush"><i class="material-icons">create</i></div>
+                <div class="icon-button" id="palette"><i class="material-icons">palette</i></div>
+                <div class="icon-button" id="undo"><i class="material-icons">undo</i></div>
+                <div class="icon-button" id="redo"><i class="material-icons">redo</i></div>
+                <div class="icon-button" id="delete"><i class="material-icons">delete</i></div>
+                <div class="icon-button" id="print"><i class="material-icons print_i">print</i></div>
+                <div id="texture" class="icon-button texture_hover"><i class="material-icons">texture</i></div>
+                <div class="icon-button" id="format_shapes"><i class="material-icons">format_shapes</i></div>
+            </div>
+
+            <!--Okno przybornika-->
+
+            <div class="popWindow_container" id="popWindow_container">
+                <div id="popWindow_palette" class="popWindow">
+                    <% var colors = ["#ff0000","#e64928","#ee7023","#f9ab15","#fefd0c","#b6d124","#b6d124","#34a73f","#009d7e","#009d7e","#0058a8","#3e2e86","#5f2a84","#7e2583","#4B0082","#000000","#808080","#a9a9a9","#bdbebd","#ffffff"] %>
+                        <% for(x in colors) { %>
+                            <div class="color" style="background-color: <%= colors[x] %>"></div>
+                    <%  } %>
+                </div>
+
+                <div id="popWindow_brush" class="popWindow">
+                    <div class="brush_preview" id="brush_preview_canvas">
+                        <canvas id="brush_preview_canvas"></canvas>
+                        <p>Preview</p>
+                    </div>
+                    <div class="brush_width">
+                        <span class="brush_width_number" id="brush_width_number">4</span>
+                        <input class="brush_width_slider" id="brush_width_slider" type="range" name="rangeInput" min="1" max="20" value="4" oninput="updateTextInput(this.value)">
+                    </div>
+                    <div class="brush_options">
+                        <input type="radio" name="brush_options" id="brush_options_solid">
+                        <input type="radio" name="brush_options" id="brush_options_dashed">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tablica -->
+
+            <div class="white_space">
+                <div class="can" id="container"></div>
+            </div>
+            <div class="clearfix"></div>
+
+            <!--Okno zapisu pliku-->
+            
+            <div id="print_box_window"> <!--class="empty_background"-->
+                <div id="print_box" class="print_box acrylic">
+                    <div class="print_boxLEFT"><img id="print_boxIMG"></div>
+                    <div class="print_boxOptions">
+                        <form method="POST" action="/">
+                            <div class="file_slider">
+                                <label>Jakość</label>
+                                <input type="range" id="filequality" name="filequality" min="1" max="10" value="8" oninput="quality_input_change(this)" disabled>
+                                <label id="quality_number">8</label>
+                            </div>
+
+                            <div>
+                                <input type="text" id="filename" name="filename" placeholder="Nazwa pliku" required>
+                            </div>
+
+                            <div>
+                                <label>Rozszerzenie pliku</label><br>
+                                <input type="radio" name="filetype" value="png" checked id="filetype_png">
+                                <label for="filetype_png">.PNG</label>
+                                <input type="radio" name="filetype" value="jpeg" id="filetype_jpg">
+                                <label for="filetype_jpg">.JPG</label>
+                            </div>
+                            <div>
+                                <button id="file_save">Zapisz</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Powiadomienia -->
+
+            <div class="alerts">
+                <div class="alert">Nowy user!</div>
+            </div>
+        </div>
+
+        
+
+        <script type="text/javascript" src="js/board.js"></script>
+        <script type="text/javascript" src="js/kit.js"></script>
+        <script type="text/javascript" src="js/socket-connection.js"></script>
+        <script type="text/javascript" src="js/login.js"></script>
+
+    </body>
+</html>
