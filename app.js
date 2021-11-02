@@ -10,7 +10,7 @@ var sharedsession = require('express-socket.io-session');
 var mongoose = require('mongoose');
 
 mongoose.connect(
-  "mongodb+srv://szymon:szymon@cluster0.yfwbg.mongodb.net/DIT_Javascript?retryWrites=true&w=majority",
+  process.env.MONGODB_CONNECTION_STRING,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
